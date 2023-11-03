@@ -1,0 +1,91 @@
+﻿#pragma kernel CSMain
+static const int threadGroupSize = 1024;
+
+struct Boid
+{
+    public Vector3 pos;
+    public Vector3 veloc;
+
+    public Vector3 cohesion;
+    public Vector3 repulsion;
+    public Vector3 alignment;
+};
+
+RWStructuredBuffer<Boid> boids;
+int size;
+float viewRadius;
+float avoidDist
+float cohesionWeight
+float repulsionWeight
+float alignmentWeight
+
+
+[numthreads(threadGroupSize, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{   
+    for(int i = 0; i < size; i++)
+    {
+        float centroidX = 0;
+        float centroidY = 0;
+        float centroidZ = 0;
+        for (int j = 0; i < size; j++)
+        {
+            centroidX += boids[j].pos.x;
+            centroidY += boids[j].pos.y;
+            centroidZ += boids[j].pos.z;
+        }
+        centroidX /= size;
+        centroidY /= size;
+        centroidZ /= size;
+        Vector3 centroid = new Vector3(centroidX, centroidY, centroidZ);
+        boids[i].cohesion = (centroid - boids[i].pos) * cohesionWeight
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        Vector3 avoidVect = new Vector3();
+        for (int j = 0; j < size; j++)
+        {
+            if (boids[i] != boids[j])
+            {
+                float3 dist = boids[j].pos - boids[i].pos;
+                if ((dist.x * dist.x + dist.y * dist.y + dist.z * dist.z) < avoidDist * avoidDist)
+                {
+                    avoidVect += dist;
+                }
+            }
+        }
+        boids[i].repulsion = avoidVect * repulsionWeight;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        Vector3 avgVeloc = new Vector3();
+        for (int j = 0; j < size; j++)
+        {
+            avgVeloc += boids[j].veloc;
+        }
+        avgVeloc /= size;
+        boids[i].alignment = (avgVeloc + boids[i].veloc) * alignmentWeight;
+    }
+}
+
+/*
+float centroidX = 0;
+float centroidY = 0;
+
+for (int i = 0; i < size; i++) {
+    centroidX += boids[i].position.x;
+    centroidY += boids[i].position.y;
+}
+
+centroidX /= size;
+centroidY /= size;
+
+float3 cent;
+cent.x = centroidX;
+cent.y = centroidY;
+cent.z = 0;
+
+for (int j = 0; i < size; i++) {
+    boids[i].velocity += (cent - boids[i].position);*/
