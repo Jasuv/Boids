@@ -59,6 +59,7 @@
     <Compile Include="Assets\BoidPackage\Scripts\BoidScript.cs" />
     <Compile Include="Assets\BoidPackage\Scripts\BoidManager.cs" />
     <Compile Include="Assets\BoidPackage\Scripts\BoidScriptExample.cs" />
+    <Compile Include="Assets\BoidPackage\Scripts\Testscript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BoidPackage\Scripts\BoidMath.compute" />

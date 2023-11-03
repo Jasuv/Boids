@@ -335,6 +335,7 @@
 "Assets/BoidPackage/Scripts/BoidManager.cs"
 "Assets/BoidPackage/Scripts/BoidScript.cs"
 "Assets/BoidPackage/Scripts/BoidScriptExample.cs"
+"Assets/BoidPackage/Scripts/Testscript.cs"
 -langversion:9.0
 
 /deterministic
